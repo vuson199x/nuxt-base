@@ -1,7 +1,9 @@
 <template>
   <div class="common-layout">
     <el-container>
-      <el-aside class="aside" width="200px">Aside</el-aside>
+      <el-aside class="aside" width="200px">
+        <LayoutMenu />
+      </el-aside>
       <el-container>
         <el-header class="header">
             <div>Header</div>
@@ -29,6 +31,7 @@
     import { ArrowDown } from '@element-plus/icons-vue';
     import { useAuthStore } from "~/stores/authStore";
 
+
     const router = useRouter();
     const user  = useUserStore();
     const auth  = useAuthStore();
@@ -55,10 +58,9 @@
   }
 
   .aside{
-    background: lightblue;
+    background: #1e64db;
     text-align: center;
     height: 100vh;
-    padding: 15px;
   }
 
   .el-dropdown-link:focus-visible {

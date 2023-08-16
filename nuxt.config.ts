@@ -21,6 +21,11 @@ export default defineNuxtConfig({
       apiBase: process.env.NUXT_PUBLIC_API_BASE,
     },
   },
+  // typescripts
+  typescript: {
+    strict: true,
+    typeCheck: true,
+  },
   devtools: {
     enabled: true
   },
