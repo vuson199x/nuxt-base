@@ -7,8 +7,6 @@ import { useAuthStore } from "~/stores/authStore";
 export default defineNuxtRouteMiddleware(async (to, from) => {
     const user = useUserStore()
     const auth = useAuthStore()
-    console.log('to', to)
-    console.log('from', from)
     if (auth?.session) {
         try {
             const userInfo = await userService.getUserInfo();

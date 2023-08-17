@@ -17,6 +17,10 @@
           <el-input v-model="form.password" type="password" autocomplete="off"  show-password/>
         </el-form-item>
         <el-form-item>
+          <el-alert 
+            title="Account: son.vu2@sotatek.com | admin@123" 
+            type="success" 
+          />
           <el-button type="input" native-type="submit" size="large" >
             Login
           </el-button>
@@ -70,6 +74,6 @@
 
   button {
     display: block;
-    margin: 0 auto;
+    margin: 15px auto 0px;
   }
 </style>
