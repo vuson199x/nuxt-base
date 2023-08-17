@@ -14,7 +14,7 @@
         </nuxt-link>
         <nuxt-link class="titleLink" activeClass="active" :to="MAIN_ROUTER.USER">
             <el-menu-item index="2">
-            <el-icon><icon-menu /></el-icon>
+            <el-icon><user /></el-icon>
             <span>Users</span>
           </el-menu-item>
         </nuxt-link>
@@ -23,8 +23,7 @@
 
 <script lang="ts" setup>
 import {
-  Document,
-  Menu as IconMenu,
+  User,
   Setting,
 } from '@element-plus/icons-vue'
 // import { sitemap } from '~/route/sitemap';

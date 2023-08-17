@@ -14,7 +14,14 @@
               </span>
               <template #dropdown>
                 <el-dropdown-menu>
-                  <el-dropdown-item @click="handleLogout()">Logout</el-dropdown-item>
+                  <el-dropdown-item>
+                    <el-icon><avatar /></el-icon>
+                    <label>Profile</label>
+                  </el-dropdown-item>
+                  <el-dropdown-item @click="handleLogout()">
+                    <el-icon><promotion /></el-icon>
+                    <label>Logout</label>
+                  </el-dropdown-item>
                 </el-dropdown-menu>
               </template>
             </el-dropdown>
@@ -28,7 +35,7 @@
 <script setup>
     import { MAIN_ROUTER } from "~/route";
     import { useUserStore } from "~/stores/userStore";
-    import { ArrowDown } from '@element-plus/icons-vue';
+    import { ArrowDown, Avatar, Promotion } from '@element-plus/icons-vue';
     import { useAuthStore } from "~/stores/authStore";
 
 

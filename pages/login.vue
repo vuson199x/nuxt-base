@@ -1,12 +1,14 @@
 <template>
    <div class="container">
-    <h1>Login</h1>
+    <h1>Nuxt Base</h1>
+    <h2>Login</h2>
     <el-form
         label-width="100px"
         :model="form"
         style="width: 500px"
         label-position="top"
         size="default"
+        @submit.prevent="handleSubmit"
       >
         <el-form-item label="Username">
           <el-input v-model="form.username" />
@@ -15,7 +17,7 @@
           <el-input v-model="form.password" type="password" autocomplete="off"  show-password/>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" size="large" @click="handleSubmit">
+          <el-button type="input" native-type="submit" size="large" >
             Login
           </el-button>
         </el-form-item>
@@ -62,7 +64,7 @@
     transform: translate(-50%, -50%);
   }
 
-  h1 {
+  h1, h2 {
       text-align: center;
   }
 

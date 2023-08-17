@@ -7,7 +7,6 @@ export interface ColumnsType {
 export interface TableProps {
     tableData: any
     columns: ColumnsType[] | null
-    isIndex?: boolean
     total?: number
     pageSize?: number
     loading?: boolean
