@@ -3,54 +3,40 @@
         background-color="#1e64db"
         active-text-color="#ffd04b"
         text-color="#fff"
-        default-active="2"
-        class="el-menu-vertical-demo"
-        @open="handleOpen"
-        @close="handleClose"
+        default-active="1"
+        class="menu"
       >
-        <el-sub-menu index="1">
-          <template #title>
-            <el-icon><location /></el-icon>
-            <span>Navigator One</span>
-          </template>
-            <el-menu-item index="1-1">item one</el-menu-item>
-            <el-menu-item index="1-2">item two</el-menu-item>
-            <el-menu-item index="1-3">item three</el-menu-item>
-          <el-sub-menu index="1-4">
-            <template #title>item four</template>
-            <el-menu-item index="1-4-1">item one</el-menu-item>
-          </el-sub-menu>
-        </el-sub-menu>
-        <el-menu-item index="2">
-          <el-icon><icon-menu /></el-icon>
-          <span>Navigator Two</span>
-        </el-menu-item>
-        <el-menu-item index="3">
-          <el-icon><document /></el-icon>
-          <span>Navigator Three</span>
-        </el-menu-item>
-        <el-menu-item index="4">
-          <el-icon><setting /></el-icon>
-          <span>Navigator Four</span>
-        </el-menu-item>
-      </el-menu>
+        <nuxt-link class="titleLink" activeClass="active" :to="MAIN_ROUTER.HOMEPAGE">
+          <el-menu-item index="1">
+            <el-icon><setting /></el-icon>
+            <span>Dashboard</span>
+          </el-menu-item>
+        </nuxt-link>
+        <nuxt-link class="titleLink" activeClass="active" :to="MAIN_ROUTER.USER">
+            <el-menu-item index="2">
+            <el-icon><icon-menu /></el-icon>
+            <span>Users</span>
+          </el-menu-item>
+        </nuxt-link>
+      </el-menu> 
 </template>
 
 <script lang="ts" setup>
 import {
   Document,
   Menu as IconMenu,
-  Location,
   Setting,
 } from '@element-plus/icons-vue'
-const handleOpen = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
-const handleClose = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
+// import { sitemap } from '~/route/sitemap';
+import { MAIN_ROUTER } from "~/route";
 </script>
 
 <style>
-
+  .titleLink {
+    text-decoration: unset;
+    color: #fff
+  }
+  .active{
+    color: #ffd04b;
+  }
 </style>

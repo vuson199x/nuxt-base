@@ -10,4 +10,5 @@ export interface TableProps {
     isIndex?: boolean
     total?: number
     pageSize?: number
+    loading?: boolean
 }

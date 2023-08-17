@@ -1,23 +1,26 @@
 <template>
-    <el-table :data="tableData" border style="width: 100%">
-        <el-table-column v-if="isIndex" type="index" :index="indexMethod" />
-        <el-table-column  
-            v-for="({props, label, width}) in columns"  
-            :key="props"
-            :prop="props" 
-            :label="label" 
-            :width="width || 'auto'" 
+    <div v-if="tableData?.length > 0">
+        <el-table v-loading="loading" :data="tableData" border style="width: 100%">
+            <el-table-column v-if="isIndex" type="index" :index="indexMethod" />
+            <el-table-column  
+                v-for="({props, label, width}) in columns"  
+                :key="props"
+                :prop="props" 
+                :label="label" 
+                :width="width || 'auto'" 
+            />
+        </el-table>
+        <el-pagination 
+            class="pagination"
+            background  
+            layout="prev, pager, next" 
+            :total="total" 
+            :page-size="pageSize"
+            :pager-count="5"
+            @current-change="handleCurrentChange"
         />
-    </el-table>
-    <el-pagination 
-        class="pagination"
-        background  
-        layout="prev, pager, next" 
-        :total="total" 
-        :page-size="pageSize"
-        :pager-count="5"
-        @current-change="handleCurrentChange"
-    />
+    </div>
+    <el-empty v-else description="No Data" />
 </template>
 
 <script setup lang="ts">
@@ -27,6 +30,7 @@ const props = withDefaults(defineProps<TableProps>(), {
     tableData: [],
     columns: null,
     isIndex: true,
+    loading: false,
     total: 1000,
     pageSize: 10
 })

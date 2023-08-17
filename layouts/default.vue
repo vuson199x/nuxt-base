@@ -6,7 +6,7 @@
       </el-aside>
       <el-container>
         <el-header class="header">
-            <div>Header</div>
+            <div>Nuxt Base</div>
             <el-dropdown class="dropdown">
               <span class="el-dropdown-link">
                 {{user?.userInfo?.data?.name}}
