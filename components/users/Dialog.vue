@@ -1,21 +1,21 @@
 <template>
   <Teleport to="body">
     <el-dialog v-model="open" width="500px" :title="data ? 'Edit User' : 'Create new user'" @close="emit('onCancel')">
-      <el-form :model="form" label-position="top">
-        <el-form-item label="Name">
+      <el-form  ref="formRef" :model="form" label-position="top" :rules="rules" status-icon>
+        <el-form-item label="Name" prop="name">
           <el-input v-model="form.name" autocomplete="off" class="el-input"/>
         </el-form-item>
-        <el-form-item label="Email">
+        <el-form-item label="Email" prop="email">
           <el-input v-model="form.email" autocomplete="off" class="el-input"/>
         </el-form-item>
-        <el-form-item label="Phone number">
+        <el-form-item label="Phone number" prop="phone_number">
           <el-input v-model="form.phone_number" autocomplete="off" class="el-input"/>
         </el-form-item>
       </el-form>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="emit('onCancel')">Cancel</el-button>
-          <el-button type="primary" @click="handleSubmit" :loading="loading">
+          <el-button type="primary" @click="handleSubmit(formRef)" :loading="loading">
             Submit
           </el-button>
         </span>
@@ -25,6 +25,7 @@
 </template>
 
 <script setup lang="ts">
+import { FormInstance, FormRules } from "element-plus";
 import userService from "~/services/user"
 const props = defineProps<{
   open: boolean;
@@ -32,7 +33,9 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits(["onCancel", "getList", "update:open"])
+
 let loading = ref(false)
+const formRef = ref<FormInstance>()
 const form = reactive({
   name: props?.data?.name || '',
   email: props?.data?.email || '',
@@ -43,7 +46,6 @@ const form = reactive({
   position: null,
   roles: [],
 })
-
 
 const handleEdit = async () => {
   try {
@@ -82,12 +84,12 @@ const handleCreate = async () => {
   }
 }
 
-const handleSubmit = () => {
-  if(props.data){
-    handleEdit()
-  }else {
-    handleCreate()
-  }
+const handleSubmit = async (formEl: FormInstance | undefined) => {
+    if (!formEl) return
+    await formEl.validate((valid) => {
+        if (!valid) return
+        props.data ? handleEdit() : handleCreate()
+    }) 
 }
 
 const open = computed({
@@ -98,6 +100,19 @@ const open = computed({
     emit("update:open", value);
   },
 });
+
+const rules = reactive<FormRules>({
+  name: [
+    { required: true, message: 'Please input name', trigger: 'blur' },
+    { min: 3, max: 100, message: 'Length should be 3 to 5', trigger: 'blur' },
+  ],
+  email: [
+    { required: true, message: 'Please input email', trigger: 'blur' },
+  ],
+  phone_number: [
+    { required: true, message: 'Please input phone number', trigger: 'blur' },
+  ],
+})
 </script>
 
 <style scoped>
