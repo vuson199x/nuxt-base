@@ -7,9 +7,10 @@
       <el-container>
         <el-header class="header">
             <div>Nuxt Base</div>
-            <el-dropdown class="dropdown">
+            <el-dropdown class="dropdown" v-if="user?.userInfo">
               <span class="el-dropdown-link">
-                {{user?.userInfo?.data?.name}}
+                <el-avatar :size="25"> {{ icon }} </el-avatar>
+                {{name}}
                <el-icon><ArrowDown /></el-icon>
               </span>
               <template #dropdown>
@@ -17,6 +18,10 @@
                   <el-dropdown-item>
                     <el-icon><avatar /></el-icon>
                     <label>Profile</label>
+                  </el-dropdown-item>
+                  <el-dropdown-item>
+                    <el-icon><lock /></el-icon>
+                    <label>Change password</label>
                   </el-dropdown-item>
                   <el-dropdown-item @click="handleLogout()">
                     <el-icon><promotion /></el-icon>
@@ -35,19 +40,27 @@
 <script setup>
     import { MAIN_ROUTER } from "~/route";
     import { useUserStore } from "~/stores/userStore";
-    import { ArrowDown, Avatar, Promotion } from '@element-plus/icons-vue';
+    import { ArrowDown, Avatar, Promotion, Lock } from '@element-plus/icons-vue';
     import { useAuthStore } from "~/stores/authStore";
-
+    import authService from "~/services/auth";
 
     const router = useRouter();
     const user  = useUserStore();
     const auth  = useAuthStore();
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+      try {
+        await authService.logout();
         user.setUserInfo(null)
         auth.setSession(null)
         router.push(MAIN_ROUTER.LOGIN);
+      } catch (error) {
+        
+      }
     }
+
+    const name = computed(() => user?.userInfo?.data?.name)
+    const icon = computed(() => user?.userInfo?.data?.name.charAt(0))
 </script>
 
 <style>

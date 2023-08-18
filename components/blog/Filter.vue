@@ -1,5 +1,5 @@
 <template>
-    <CommonFilter :isShowCreate="false">
+    <CommonFilter @onCreate="emit('onOpenDialog')">
         <el-input
             v-model="params.search_key"
             class="search-input"

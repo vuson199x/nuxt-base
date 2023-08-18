@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h1>USERS</h1>
-        <UsersFilter 
+        <h1>BLOGS</h1>
+        <BlogFilter 
             :params="params"
             @onSearch="getList"
             @onOpenDialog="dialogVisible = true"
@@ -14,13 +14,18 @@
             @handle-change="handleChange"
             :loading="loading"
         >
-            <el-table-column fixed="right" label="Actions" width="80px">
+            <el-table-column fixed="right" label="Actions" width="140px">
                 <template #default="scope">
                     <el-button type="primary" size="small" @click="getDetail(scope.row.id)">Edit</el-button>
+                    <el-button
+                        size="small"
+                        type="danger"
+                        @click="confirmDelete(scope.row)"
+                    >Delete</el-button>
                 </template>
             </el-table-column>
         </CommonTable>
-        <UsersDialog 
+        <BlogDialog 
             v-if="dialogVisible"
             :open="dialogVisible"
             :data="dataForm"
@@ -31,7 +36,7 @@
 </template>
 
 <script setup>
-    import userService from "~/services/user"
+import blogService from "~/services/blog"
 
     let loading = ref(false)
     let dataForm = ref(null)
@@ -62,7 +67,7 @@
 
     const getDetail = async (id) => {
         try {
-            const {data} = await userService.getUserDetail(id);
+            const {data} = await blogService.getBlogDetail(id);
             dataForm.value = data
             dialogVisible.value = true
         } catch (error) {
@@ -73,7 +78,7 @@
     const getList = async () => {
         try {
             loading.value = true
-            const {data} = await userService.getUsers(params.value);
+            const {data} = await blogService.getBlogs(params.value);
             const table = data.data.map((item, index) => {
                 return {
                     ...item,
@@ -91,6 +96,37 @@
         }
     }
 
+    const handleDelete = async (id) => {
+        try {
+            loading.value = true
+            await blogService.deleteBlog(id);
+            getList()
+            ElMessage({
+                type: 'success',
+                message: 'Delete completed',
+            })
+        } catch (error) {
+            
+        } finally {
+            loading.value = false
+        }
+    }
+
+    const confirmDelete = (row) => {
+        ElMessageBox.confirm(
+            'Are you sure remove this blog?',
+            'Warning',
+            {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                type: 'warning',
+            }
+        )
+        .then(() => {
+            handleDelete(row.id)
+        })
+    }
+
     watch(params, () => {
         getList()
     })
@@ -106,24 +142,24 @@
             width: '70px'
         },
         {
-            label: 'Name',
-            props: 'name'
+            label: 'Title',
+            props: 'title'
         },
         {
-            label: 'Email',
-            props: 'email',
+            label: 'Content',
+            props: 'content',
         },
         {
-            label: 'Phone number',
-            props: 'phone_number'
+            label: 'Thumbnail',
+            props: 'thumbnail'
         },
         {
-            label: 'Role',
-            props: 'role'
+            label: 'Created at',
+            props: 'created_at'
         }
     ]
 </script>
 
 <style scoped>
-
+    
 </style>

@@ -42,7 +42,7 @@ const handleCurrentChange = (value: number) => {
 
 </script>
 
-<style>
+<style scoped>
     .pagination{
         float: right;
         margin-top: 20px

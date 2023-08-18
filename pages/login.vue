@@ -1,6 +1,4 @@
 <template>
-   <div class="container">
-    <h1>Nuxt Base</h1>
     <h2>Login</h2>
     <el-form
         label-width="100px"
@@ -18,16 +16,15 @@
         </el-form-item>
         <el-form-item>
           <el-alert 
-            title="Account: son.vu2@sotatek.com | admin@123" 
+            title="Account: son.vu2@sotatek.com | 123123123" 
             type="success" 
           />
-          <el-button type="input" native-type="submit" size="large" >
+          <el-button type="primary" native-type="submit" size="large" >
             Login
           </el-button>
         </el-form-item>
-      </el-form>
-   </div>
- 
+        <el-text class="create-account" type="primary" @click="router.push(MAIN_ROUTER.SIGNUP)">Create account</el-text>
+    </el-form>
 </template>
 
 <script setup>
@@ -35,7 +32,7 @@
         layout: 'login'
     })
     import { useAuthStore } from "~/stores/authStore";
-    import userService from "~/services/user";
+    import authService from "~/services/auth";
     import { MAIN_ROUTER } from "~/route";
 
     const router = useRouter();
@@ -47,7 +44,7 @@
 
     const handleSubmit = async () => {
       try {
-          const session = await userService.login(form);
+          const session = await authService.login(form);
           if (session) {
             store.setSession(session);
             router.push(MAIN_ROUTER.HOMEPAGE);
@@ -57,23 +54,9 @@
 </script>
 
 <style scoped>
-  .container {
-    background: #fff;
-    border: 1px solid #c0c4cc;
-    border-radius: 10px;
-    padding: 20px 20px 30px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  h1, h2 {
-      text-align: center;
-  }
-
-  button {
+  .create-account {
     display: block;
-    margin: 15px auto 0px;
+    text-align: center;
+    cursor: pointer;
   }
 </style>

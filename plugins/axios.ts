@@ -8,7 +8,7 @@ export default defineNuxtPlugin(() => {
     const config = useRuntimeConfig();
     const axiosInstance = Axios.create({
         timeout: 3 * 60 * 1000,
-        baseURL: config.public.apiBase + "/admin",
+        baseURL: config.public.apiBase,
     });
 
     axiosInstance.interceptors.request.use(
@@ -32,9 +32,10 @@ export default defineNuxtPlugin(() => {
         (response: AxiosResponse) => {
             return response.data;
         },
-        (error: AxiosError) => {
+        (error: any) => {
             if (error.response?.status === ResponseCode.UNAUTHORIZED)
                 navigateTo(MAIN_ROUTER.LOGIN);
+            ElMessage.error(error?.response?.data?.message)
             return Promise.reject(error?.response?.data);
         }
     );

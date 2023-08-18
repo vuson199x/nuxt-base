@@ -18,7 +18,8 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
             auth.setSession(null)
             return navigateTo(MAIN_ROUTER.LOGIN);
         }
-    } else if (to.path !== MAIN_ROUTER.LOGIN) {
-        return navigateTo(MAIN_ROUTER.LOGIN);
     }
+    // else if (to.path !== MAIN_ROUTER.LOGIN) {
+    //     return navigateTo(MAIN_ROUTER.LOGIN);
+    // }
 })

@@ -18,6 +18,12 @@
             <span>Users</span>
           </el-menu-item>
         </nuxt-link>
+        <nuxt-link class="titleLink" activeClass="active" :to="MAIN_ROUTER.BLOG">
+            <el-menu-item :index="MAIN_ROUTER.BLOG">
+            <el-icon><management /></el-icon>
+            <span>Blog</span>
+          </el-menu-item>
+        </nuxt-link>
       </el-menu> 
 </template>
 
@@ -25,6 +31,7 @@
 import {
   User,
   Setting,
+  Management
 } from '@element-plus/icons-vue'
 // import { sitemap } from '~/route/sitemap';
 import { MAIN_ROUTER } from "~/route";
@@ -33,7 +40,7 @@ const router = useRoute()
 const isActive = computed(() => router.path)
 </script>
 
-<style>
+<style scoped>
   .titleLink {
     text-decoration: unset;
     color: #fff
