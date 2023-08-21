@@ -43,7 +43,6 @@ const props = defineProps<{
 const emit = defineEmits(["onCancel", "getList", "update:open"])
 
 let loading = ref(false)
-const imageUrl = ref('')
 const formRef = ref<FormInstance>()
 const form = reactive({
   title : props?.data?.title  || '',
@@ -56,7 +55,7 @@ const handleEdit = async () => {
       loading.value = true
       await blogService.updateBlog({
         ...form,
-        thumbnail: props?.data?.thumbnail ? null : form.thumbnail,
+        thumbnail: typeof form.thumbnail === 'string'  ? null : form.thumbnail,
         id: props.data.id
       });
       emit('onCancel')
@@ -98,10 +97,7 @@ const handleSubmit = async (formEl: FormInstance | undefined) => {
 }
 
 const handleChange = (file: any) => {
-  console.log('value', file)
-  let data = new FormData();
-  data.append("file", file)
-  form.thumbnail = {...file}
+  form.thumbnail = file
 }
 
 const open = computed({
