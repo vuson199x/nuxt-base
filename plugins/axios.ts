@@ -1,8 +1,7 @@
-import Axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import Axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import queryString from "query-string";
-import { MAIN_ROUTER } from "~/route";
 import { ResponseCode } from "~/constants";
-import { useAuthStore } from "~/stores/authStore";
+import { MAIN_ROUTER } from "~/route";
 
 export default defineNuxtPlugin(() => {
     const config = useRuntimeConfig();
@@ -13,13 +12,14 @@ export default defineNuxtPlugin(() => {
 
     axiosInstance.interceptors.request.use(
         (config: any) => {
-            const auth: any = useAuthStore()
+            const token: any = useCookie('auth')
+            const auth = token?.value
             if (config) {
                 return {
                     ...config,
                     headers: {
                         ...config.headers,
-                        Authorization: `${auth?.session?.token_type} ${auth?.session?.access_token}`,
+                        Authorization: `${auth?.token_type} ${auth?.access_token}`,
                     },
                 };
             }

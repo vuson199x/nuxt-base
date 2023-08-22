@@ -45,11 +45,10 @@
     definePageMeta({
         layout: 'login'
     })
-    import { reactive, ref } from 'vue'
-    import type { FormInstance, FormRules } from 'element-plus'
-    import { useAuthStore } from "~/stores/authStore";
-    import authService from "~/services/auth";
+    import type { FormInstance, FormRules } from 'element-plus';
+    import { reactive, ref } from 'vue';
     import { MAIN_ROUTER } from "~/route";
+    import authService from "~/services/auth";
 
     const router = useRouter();
     const loading = ref(false)

@@ -13,7 +13,6 @@ export default defineNuxtConfig({
     "@nuxt/content",
     "@pinia/nuxt",
     "@vueuse/nuxt",
-    "@pinia-plugin-persistedstate/nuxt",
     "@element-plus/nuxt"
   ],
   runtimeConfig: {

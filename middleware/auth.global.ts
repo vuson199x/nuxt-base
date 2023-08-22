@@ -2,33 +2,30 @@
 import { useUserStore } from "~/stores/userStore";
 import { MAIN_ROUTER } from "~/route";
 import userService from "~/services/user";
-import { useAuthStore } from "~/stores/authStore";
 
 const PUBLIC_PATHS = [
     MAIN_ROUTER.LOGIN,
     MAIN_ROUTER.SIGNUP
 ]
 
-export default defineNuxtRouteMiddleware(async (to, from) => {
+export default defineNuxtRouteMiddleware(async (to) => {
     const user = useUserStore()
-    const auth = useAuthStore()
+    const token = useCookie('auth')
 
-    if (auth?.session) {
-        try {
-            if (!user?.userInfo) {
+    if (token.value) {
+        if (PUBLIC_PATHS.includes(to.path)) {
+            return navigateTo(MAIN_ROUTER.HOMEPAGE);
+        } else if (!user?.userInfo) {
+            try {
                 const userInfo = await userService.getUserInfo();
+                if (!userInfo) {
+                    token.value = null
+                    return navigateTo(MAIN_ROUTER.LOGIN);
+                }
                 user.setUserInfo(userInfo)
-            }
-            if (PUBLIC_PATHS.includes(to.path)) {
-                return navigateTo(MAIN_ROUTER.HOMEPAGE);
-            }
-        } catch (error) {
-            auth.setSession(null)
-            return navigateTo(MAIN_ROUTER.LOGIN);
+            } catch (error) { }
         }
-    } else if (!PUBLIC_PATHS.includes(from.path)) {
-        return
     } else if (!PUBLIC_PATHS.includes(to.path)) {
-        return navigateTo(MAIN_ROUTER.LOGIN);
+        return navigateTo(MAIN_ROUTER.LOGIN)
     }
 })

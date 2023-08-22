@@ -41,22 +41,18 @@
     import { MAIN_ROUTER } from "~/route";
     import { useUserStore } from "~/stores/userStore";
     import { ArrowDown, Avatar, Promotion, Lock } from '@element-plus/icons-vue';
-    import { useAuthStore } from "~/stores/authStore";
     import authService from "~/services/auth";
 
     const router = useRouter();
     const user  = useUserStore();
-    const auth  = useAuthStore();
-
+    const token = useCookie('auth')
     const handleLogout = async () => {
       try {
         await authService.logout();
+        token.value = null
         user.setUserInfo(null)
-        auth.setSession(null)
         router.push(MAIN_ROUTER.LOGIN);
-      } catch (error) {
-        
-      }
+      } catch (error) {}
     }
 
     const name = computed(() => user?.userInfo?.data?.name)

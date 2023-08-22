@@ -31,12 +31,10 @@
     definePageMeta({
         layout: 'login'
     })
-    import { useAuthStore } from "~/stores/authStore";
     import authService from "~/services/auth";
     import { MAIN_ROUTER } from "~/route";
-
     const router = useRouter();
-    const store = useAuthStore();
+    const token  = useCookie('auth')
     const form = toReactive({
         username: "",
         password: "",
@@ -46,7 +44,7 @@
       try {
           const session = await authService.login(form);
           if (session) {
-            store.setSession(session);
+            token.value = session
             router.push(MAIN_ROUTER.HOMEPAGE);
           }
       } catch (error) {}
