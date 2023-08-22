@@ -7,6 +7,7 @@
                 :prop="props" 
                 :label="label" 
                 :width="width || 'auto'" 
+                class-name="custom-column"
             />
             <slot />
         </el-table>
@@ -46,5 +47,16 @@ const handleCurrentChange = (value: number) => {
     .pagination{
         float: right;
         margin-top: 20px
+    }
+</style>
+
+<style >
+    .custom-column .cell {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        word-break: break-word;
     }
 </style>
