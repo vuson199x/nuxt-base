@@ -75,6 +75,7 @@
 <style>
   .common-layout{
     height: 100vh;
+    overflow: hidden;
   }
 
   .header {
@@ -98,5 +99,10 @@
 
   .el-dropdown-menu label {
     cursor: pointer;
+  }
+
+  .el-main {
+    overflow: auto;
+    height: 100vh;
   }
 </style>
