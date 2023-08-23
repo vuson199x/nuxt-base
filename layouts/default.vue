@@ -14,12 +14,12 @@
                <el-icon><ArrowDown /></el-icon>
               </span>
               <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item>
+                <el-dropdown-menu class="el-dropdown-menu">
+                  <el-dropdown-item @click="isProfileDialog = true">
                     <el-icon><avatar /></el-icon>
                     <label>Profile</label>
                   </el-dropdown-item>
-                  <el-dropdown-item>
+                  <el-dropdown-item @click="isChangePwdDialog = true">
                     <el-icon><lock /></el-icon>
                     <label>Change password</label>
                   </el-dropdown-item>
@@ -35,6 +35,16 @@
       </el-container>
     </el-container>
   </div>
+  <Profile 
+      v-if="isProfileDialog"
+      :open="isProfileDialog"
+      @onCancel="isProfileDialog = false"
+  />
+  <ProfileChangePwd
+      v-if="isChangePwdDialog"
+      :open="isChangePwdDialog"
+      @onCancel="isChangePwdDialog = false"
+  />
 </template>
 
 <script setup>
@@ -46,6 +56,9 @@
     const router = useRouter();
     const user  = useUserStore();
     const token = useCookie('auth')
+    let isProfileDialog = ref(false)
+    let isChangePwdDialog = ref(false)
+
     const handleLogout = async () => {
       try {
         await authService.logout();
@@ -82,4 +95,8 @@
   .el-dropdown-link:focus-visible {
     outline: none
   } 
+
+  .el-dropdown-menu label {
+    cursor: pointer;
+  }
 </style>
