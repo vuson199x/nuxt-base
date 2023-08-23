@@ -6,7 +6,7 @@ const blogService = {
     deleteBlog: (id: number) =>
         useNuxtApp().$api.delete(`blog/${id}`),
     updateBlog: (params: any) =>
-        useNuxtApp().$api.post(`blog/${params.id}`, params, {
+        useNuxtApp().$api.put(`blog/${params.id}`, params, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             }

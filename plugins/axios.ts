@@ -57,8 +57,12 @@ export default defineNuxtPlugin(() => {
                 ): Promise<ResType> {
                     return axiosInstance.post(url, data, config);
                 },
-                put<ReqType, ResType>(url: string, data?: ReqType): Promise<ResType> {
-                    return axiosInstance.put(url, data);
+                put<ReqType, ResType>(
+                    url: string,
+                    data?: ReqType,
+                    config?: AxiosRequestConfig<ReqType>
+                ): Promise<ResType> {
+                    return axiosInstance.put(url, data, config);
                 },
                 patch<ReqType, ResType>(url: string, data?: ReqType): Promise<ResType> {
                     return axiosInstance.patch(url, data);
